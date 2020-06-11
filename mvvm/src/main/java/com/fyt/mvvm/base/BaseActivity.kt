@@ -1,20 +1,14 @@
-package com.fyt.myapplication.base
+package com.fyt.mvvm.base
 
 import android.content.Intent
 import android.os.Bundle
-import android.os.PersistableBundle
-import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.*
 import androidx.lifecycle.Observer
 import com.fyt.myapplication.common.AppManager
-import org.koin.androidx.viewmodel.ext.android.getViewModel
-import timber.log.Timber
-import java.lang.reflect.ParameterizedType
-import java.util.*
 
-abstract class BaseActivity<VM: BaseViewModel<out BaseRepository,out BaseUiState>> : AppCompatActivity() , IActivity {
+abstract class BaseActivity<VM: BaseViewModel<out BaseRepository, out BaseUiState>> : AppCompatActivity() , IActivity {
 
     lateinit var mViewModel: VM
 

@@ -1,11 +1,10 @@
-package com.fyt.myapplication.base.globalsetting
+package com.fyt.mvvm.globalsetting
 
 import android.app.Application
 import android.content.Context
 import retrofit2.Retrofit
 
-class RepositoryManager(retrofit:Retrofit, application: Application):
-    IRepositoryManager {
+class RepositoryManager(retrofit:Retrofit, application: Application): IRepositoryManager {
     var mRetrofit: Retrofit = retrofit
     var mApplication: Application = application
 

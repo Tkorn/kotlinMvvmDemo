@@ -1,22 +1,18 @@
 package com.fyt.myapplication.mvvm.ui
 
 import android.os.Bundle
-import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.RecyclerView
+import com.fyt.mvvm.base.BaseActivity
 import com.fyt.myapplication.R
-import com.fyt.myapplication.base.BaseActivity
 import com.fyt.myapplication.mvvm.adapter.UserAdapter
 import com.fyt.myapplication.mvvm.repository.bean.UserBean
 import com.fyt.myapplication.mvvm.viewmodel.MainViewModel
-import com.google.gson.Gson
 import com.scwang.smartrefresh.layout.api.RefreshLayout
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener
 import com.scwang.smartrefresh.layout.listener.OnRefreshLoadMoreListener
 import kotlinx.android.synthetic.main.activity_main.*
 import org.koin.androidx.viewmodel.ext.android.getViewModel
-import timber.log.Timber
 
 class MainActivity : BaseActivity<MainViewModel>(), OnRefreshListener, OnRefreshLoadMoreListener {
     override fun initViewModel(): MainViewModel = getViewModel()

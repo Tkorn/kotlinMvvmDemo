@@ -1,4 +1,4 @@
-package com.fyt.myapplication.base
+package com.fyt.mvvm.base
 
 import android.app.Activity
 import android.content.Intent

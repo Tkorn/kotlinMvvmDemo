@@ -1,18 +1,19 @@
-package com.fyt.myapplication.base
+package com.fyt.myapplication
 
 import android.app.Application
 import android.content.ComponentCallbacks2
 import com.bumptech.glide.Glide
-import com.fyt.myapplication.BuildConfig
+import com.fyt.mvvm.di.mSingleModule
 import com.fyt.myapplication.common.Preference
-import com.fyt.myapplication.di.component.appModule
+import com.fyt.myapplication.di.mAppModule
+import com.fyt.myapplication.di.mViewModelModule
 import com.squareup.leakcanary.LeakCanary
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidLogger
 import org.koin.core.context.startKoin
 import timber.log.Timber
 
-class BaseApplication: Application() {
+class MyApplication: Application() {
 
     override fun onCreate() {
         super.onCreate()
@@ -22,9 +23,8 @@ class BaseApplication: Application() {
                 androidLogger()
             }
             // use the Android context given there
-            androidContext(this@BaseApplication)
-            modules(appModule)
-
+            androidContext(this@MyApplication)
+            modules(listOf(mAppModule,mSingleModule,mViewModelModule))
         }
 
         if (BuildConfig.DEBUG) {

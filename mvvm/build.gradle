@@ -1,0 +1,76 @@
+apply plugin: 'com.android.library'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-android-extensions'
+apply plugin: 'kotlin-kapt'
+
+android {
+    compileSdkVersion 29
+    buildToolsVersion "29.0.3"
+
+
+    defaultConfig {
+        minSdkVersion 23
+        targetSdkVersion 29
+        versionCode 1
+        versionName "1.0"
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+
+
+    implementation rootProject.ext.dependencies["appcompat"]
+    implementation rootProject.ext.dependencies["recyclerview"]
+
+    testImplementation 'junit:junit:4.12'
+    androidTestImplementation 'androidx.test:runner:1.2.0'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
+
+    // ViewModel
+    api rootProject.ext.dependencies["lifecycle-viewmodel-ktx"]
+    // LiveData
+    api rootProject.ext.dependencies["lifecycle-livedata-ktx"]
+    // Lifecycles only (without ViewModel or LiveData)
+    api rootProject.ext.dependencies["lifecycle-runtime-ktx"]
+    // Saved state module for ViewModel
+    api rootProject.ext.dependencies["lifecycle-viewmodel-savedstate"]
+    api rootProject.ext.dependencies["lifecycle-extensions"]
+
+    // Annotation processor
+    kapt rootProject.ext.dependencies["lifecycle-compiler"]
+
+    //Retrofit2
+    api rootProject.ext.dependencies["retrofit"]
+    api rootProject.ext.dependencies["converter-gson"]
+//    api rootProject.ext.dependencies["retrofit2-kotlin-coroutines-adapter"]
+
+    api rootProject.ext.dependencies["okhttp"]
+    api rootProject.ext.dependencies["logging-interceptor"]
+
+    // glide
+    api rootProject.ext.dependencies["glide"]
+    kapt rootProject.ext.dependencies["glide-compiler"]
+
+    // Koin
+    api rootProject.ext.dependencies["koin-androidx-scope"]
+    api rootProject.ext.dependencies["koin-androidx-viewmodel"]
+    api rootProject.ext.dependencies["koin-androidx-ext"]
+
+
+    api rootProject.ext.dependencies["timber"]
+    api rootProject.ext.dependencies["autosize"]
+
+
+}

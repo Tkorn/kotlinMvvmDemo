@@ -1,4 +1,4 @@
-package com.fyt.myapplication.base
+package com.fyt.mvvm.base
 
 import android.app.Application
 import androidx.annotation.AnyThread
@@ -7,15 +7,16 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
-import com.fyt.myapplication.base.globalsetting.GlobalResponseErrorListener
-import com.fyt.myapplication.mvvm.repository.bean.Result
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import timber.log.Timber
+import com.fyt.mvvm.common.BaseResult
+import com.fyt.mvvm.globalsetting.IResponseErrorListener
 
-abstract class BaseViewModel<R: BaseRepository,US: BaseUiState>(application: Application, repository: R): AndroidViewModel(application) {
+abstract class BaseViewModel<R: BaseRepository,US: BaseUiState>(application: Application, repository: R,responseErrorListener: IResponseErrorListener): AndroidViewModel(application) {
     var mRepository = repository
+    val mResponseErrorListener = responseErrorListener
 
     val mUiState: LiveData<US>
         get() = getUiState()
@@ -34,9 +35,8 @@ abstract class BaseViewModel<R: BaseRepository,US: BaseUiState>(application: App
             }
             Timber.e(result.toString())
             when (result){
-                is Result.Success -> success(result.data)
-                is Result.Error ->
-                    GlobalResponseErrorListener.getInstance().handleResponseError(getApplication(),result.error)
+                is BaseResult.Success -> success(result.data)
+                is BaseResult.Error -> mResponseErrorListener.handleResponseError(result.error)
             }
         }
     }
@@ -47,14 +47,14 @@ abstract class BaseViewModel<R: BaseRepository,US: BaseUiState>(application: App
                 resultCallBack.callBack()
             }
             when (result){
-                is Result.Success -> success(result.data)
-                is Result.Error -> error(result.error)
+                is BaseResult.Success -> success(result.data)
+                is BaseResult.Error -> error(result.error)
             }
         }
     }
 
     interface ResultCallBack<T>{
-        suspend fun callBack(): Result<T>
+        suspend fun callBack(): BaseResult<T>
     }
 
     @AnyThread

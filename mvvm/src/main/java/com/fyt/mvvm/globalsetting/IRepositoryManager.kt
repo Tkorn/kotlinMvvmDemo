@@ -1,4 +1,4 @@
-package com.fyt.myapplication.base.globalsetting
+package com.fyt.mvvm.globalsetting
 
 import android.content.Context
 

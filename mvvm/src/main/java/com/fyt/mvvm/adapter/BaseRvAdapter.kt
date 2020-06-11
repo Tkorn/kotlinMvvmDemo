@@ -1,9 +1,10 @@
-package com.fyt.myapplication.base.adapter
+package com.fyt.mvvm.adapter
 
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.fyt.myapplication.base.adapter.BaseRvHolder
 
 abstract class BaseRvAdapter<T>(info: List<T>): RecyclerView.Adapter<BaseRvHolder<T>>() {
     lateinit var mHolder: BaseRvHolder<T>
@@ -16,7 +17,7 @@ abstract class BaseRvAdapter<T>(info: List<T>): RecyclerView.Adapter<BaseRvHolde
         //设置Item点击事件
         mHolder.setOnItemClickListener(object: BaseRvHolder.OnViewClickListener{
             override fun onViewClick(view: View, position: Int){
-                if (mInfos.isNotEmpty()) {
+                if (mOnItemClickListener!= null && mInfos.isNotEmpty()) {
                     mOnItemClickListener!!.onItemClick(view, viewType, mInfos[position], position)
                 }
             }

@@ -1,4 +1,4 @@
-package com.fyt.mvvm.common
+package com.fyt.mvvm.base
 
 sealed class BaseResult<out T> {
 

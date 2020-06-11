@@ -11,7 +11,6 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import timber.log.Timber
-import com.fyt.mvvm.common.BaseResult
 import com.fyt.mvvm.globalsetting.IResponseErrorListener
 
 abstract class BaseViewModel<R: BaseRepository,US: BaseUiState>(application: Application, repository: R,responseErrorListener: IResponseErrorListener): AndroidViewModel(application) {

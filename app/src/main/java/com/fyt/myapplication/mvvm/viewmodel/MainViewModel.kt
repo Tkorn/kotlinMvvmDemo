@@ -4,7 +4,7 @@ import android.app.Application
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.fyt.mvvm.base.BaseViewModel
-import com.fyt.mvvm.common.BaseResult
+import com.fyt.mvvm.base.BaseResult
 import com.fyt.mvvm.globalsetting.IResponseErrorListener
 import com.fyt.myapplication.mvvm.repository.MainRepository
 import com.fyt.myapplication.mvvm.viewmodel.uistate.MainUiState

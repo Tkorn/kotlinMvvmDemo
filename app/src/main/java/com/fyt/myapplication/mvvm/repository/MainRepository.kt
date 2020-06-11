@@ -4,7 +4,7 @@ import com.fyt.mvvm.base.BaseRepository
 import com.fyt.mvvm.globalsetting.IRepositoryManager
 import com.fyt.myapplication.mvvm.repository.api.UserService
 import com.fyt.myapplication.mvvm.repository.bean.UserBean
-import com.fyt.mvvm.common.BaseResult
+import com.fyt.mvvm.base.BaseResult
 
 class MainRepository(repositoryManager: IRepositoryManager): BaseRepository(repositoryManager){
 

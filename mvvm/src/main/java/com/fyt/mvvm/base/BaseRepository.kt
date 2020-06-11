@@ -1,7 +1,7 @@
 package com.fyt.mvvm.base
+
 import retrofit2.HttpException
 import retrofit2.Response
-import com.fyt.mvvm.common.BaseResult
 import com.fyt.mvvm.globalsetting.IRepositoryManager
 
 open class BaseRepository(repositoryManager: IRepositoryManager) {

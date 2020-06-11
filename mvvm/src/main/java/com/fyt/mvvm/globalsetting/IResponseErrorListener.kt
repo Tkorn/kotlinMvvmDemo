@@ -1,16 +1,9 @@
 package com.fyt.mvvm.globalsetting
 
-import android.content.Context
-import android.net.ParseException
-import android.widget.Toast
-import com.google.gson.JsonIOException
-import com.google.gson.JsonParseException
-import org.json.JSONException
-import retrofit2.HttpException
-import timber.log.Timber
-import java.net.SocketTimeoutException
-import java.net.UnknownHostException
-
+/*
+* 全局的请求异常处理
+* 具体实现交给继承者 通过 koin 注入实例
+* */
 interface IResponseErrorListener{
 
     fun handleResponseError(t: Throwable)

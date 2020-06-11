@@ -1,5 +1,7 @@
 package com.fyt.mvvm.di
 
+import com.fyt.mvvm.BuildConfig
+import com.fyt.mvvm.globalsetting.IGlobalConfig
 import com.fyt.mvvm.globalsetting.IGlobalHttpInterceptor
 import com.fyt.mvvm.globalsetting.IRepositoryManager
 import com.fyt.mvvm.globalsetting.RepositoryManager
@@ -17,7 +19,6 @@ import java.util.concurrent.TimeUnit
 
 
 val TIME_OUT : Long = 10
-val BASE_URL = "https://api.github.com"
 
 val mSingleModule = module {
 
@@ -31,11 +32,17 @@ val mSingleModule = module {
     }
 
     single {
+        val globalConfig: IGlobalConfig = get()
         val globalHttpInterceptor: IGlobalHttpInterceptor = get()
-        OkHttpClient.Builder()
+        var builder = OkHttpClient.Builder()
             .connectTimeout(TIME_OUT, TimeUnit.SECONDS)
             .writeTimeout(TIME_OUT, TimeUnit.SECONDS)
-            .addNetworkInterceptor(HttpLoggingInterceptor())
+            .addNetworkInterceptor(HttpLoggingInterceptor().apply {
+                level = when (BuildConfig.DEBUG) {
+                    true -> HttpLoggingInterceptor.Level.BODY
+                    false -> HttpLoggingInterceptor.Level.NONE
+                }
+            })
             .addInterceptor(object : Interceptor{
                 override fun intercept(chain: Interceptor.Chain): Response {
                     return chain.proceed(globalHttpInterceptor.onHttpRequestBefore(chain,chain.request()))
@@ -54,13 +61,15 @@ val mSingleModule = module {
                     return globalHttpInterceptor.onHttpResultResponse(chain,originalResponse)
                 }
             })
-            .build()
+        globalConfig.configOkHttpClient(androidApplication(),builder).build()
+
      }
 
     single {
+        val globalConfig: IGlobalConfig = get()
         Retrofit.Builder()
             .client(get())
-            .baseUrl(BASE_URL)
+            .baseUrl(globalConfig.configBaseUrl())//BuildConfig.API_BASE_URL
             .addConverterFactory(GsonConverterFactory.create(get()))
             .build()
     }

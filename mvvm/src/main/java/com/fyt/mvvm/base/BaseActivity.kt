@@ -1,6 +1,5 @@
 package com.fyt.mvvm.base
 
-import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -53,14 +52,6 @@ abstract class BaseActivity<VM: BaseViewModel<out BaseRepository, out BaseUiStat
 
     override fun showMessage(message: String) {
         Toast.makeText(this,message,Toast.LENGTH_SHORT).show()
-    }
-
-    override fun launchActivity(intent: Intent) {
-        startActivity(intent)
-    }
-
-    override fun killMyself() {
-        finish()
     }
 
 }

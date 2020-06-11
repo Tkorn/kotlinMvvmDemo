@@ -2,4 +2,10 @@
     <string name="app_name">My Application</string>
     <string name="action_settings">Settings</string>
     <string name="title_activity_login">LoginActivity</string>
+
+    <string name="login_tips">Sign in to GitHub</string>
+    <string name="login_hint_username">Username or email address</string>
+    <string name="login_hint_password">Password</string>
+    <string name="login_sign_in">Sign in</string>
+
 </resources>

@@ -27,7 +27,6 @@ class MainViewModel(application: Application,
                 return mRepository.getUsers(lastUserId)
             }
         },{
-//            Timber.e(Gson().toJson(it))
             var users = mutableListOf<UserBean>()
             users.addAll(it)
             if (users.size > 0) {
@@ -51,7 +50,6 @@ class MainViewModel(application: Application,
                 return mRepository.getUsers(lastUserId)
             }
         },{
-//            Timber.e(Gson().toJson(it))
             var users = mutableListOf<UserBean>()
             users.addAll(it)
             if (users.size > 0) {

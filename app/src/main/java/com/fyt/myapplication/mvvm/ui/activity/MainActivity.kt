@@ -1,4 +1,4 @@
-package com.fyt.myapplication.mvvm.ui
+package com.fyt.myapplication.mvvm.ui.activity
 
 import android.os.Bundle
 import androidx.recyclerview.widget.DefaultItemAnimator

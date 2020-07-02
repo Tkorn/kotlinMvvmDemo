@@ -12,7 +12,6 @@ import com.fyt.myapplication.mvvm.viewmodel.LoginViewModel
 import com.fyt.myapplication.mvvm.viewmodel.MainViewModel
 import org.koin.android.ext.koin.androidContext
 import org.koin.androidx.viewmodel.dsl.viewModel
-import org.koin.core.qualifier.named
 import org.koin.dsl.module
 
 

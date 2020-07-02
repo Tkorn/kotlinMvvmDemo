@@ -68,6 +68,10 @@ dependencies {
     api rootProject.ext.dependencies["koin-androidx-viewmodel"]
     api rootProject.ext.dependencies["koin-androidx-ext"]
 
+    // paging
+    api rootProject.ext.dependencies["paging-runtime-ktx"]
+    api rootProject.ext.dependencies["paging-common-ktx"]
+    api rootProject.ext.dependencies["paging-rxjava2-ktx"]
 
     api rootProject.ext.dependencies["timber"]
     api rootProject.ext.dependencies["autosize"]

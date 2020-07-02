@@ -9,6 +9,9 @@ class GlobalConfig: IGlobalConfig{
 
     override fun configBaseUrl(): String = baseUrl
 
+    /*
+    * 添加 OkHttpClient.Builder 的设置
+    * */
     override fun configOkHttpClient(application: Application, builder: OkHttpClient.Builder): OkHttpClient.Builder {
         return builder
     }

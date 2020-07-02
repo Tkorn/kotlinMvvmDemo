@@ -3,6 +3,7 @@ package com.fyt.myapplication.mvvm.viewmodel
 import android.app.Application
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.paging.*
 import com.fyt.mvvm.base.BaseViewModel
 import com.fyt.mvvm.base.BaseResult
 import com.fyt.mvvm.globalsetting.IResponseErrorListener
@@ -18,52 +19,52 @@ class MainViewModel(application: Application,
     private var mainUiState = MutableLiveData<MainUiState>(MainUiState())
     override fun getUiState(): LiveData<MainUiState> = mainUiState
 
-    var lastUserId = 1
+    private val userDataSource = object: ItemKeyedDataSource<Long,UserBean>(){
+        override fun loadInitial(params: LoadInitialParams<Long>, callback: LoadInitialCallback<UserBean>) {
+            apply(object : ResultCallBack<List<UserBean>> {
+                override suspend fun callBack(): BaseResult<List<UserBean>> {
+                    return mRepository.getUsers(1,params.requestedLoadSize)
+                }
+            },{
+                callback.onResult(it)
+                mainUiState.postNext {state->
+                    state.copy(referish = true,loadMode = false)
+                }
+            },{e ->
+                mResponseErrorListener.handleResponseError(e)
+                mainUiState.postNext {state->
+                    state.copy(referish = true,loadMode = false)
+                }
+            })
+        }
 
-    fun onRefresh() {
-        lastUserId = 1
-        apply(object : ResultCallBack<List<UserBean>> {
-            override suspend fun callBack(): BaseResult<List<UserBean>> {
-                return mRepository.getUsers(lastUserId)
-            }
-        },{
-            var users = mutableListOf<UserBean>()
-            users.addAll(it)
-            if (users.size > 0) {
-                lastUserId = users[users.size -1].id
-            }
-            mainUiState.postNext {state->
-                state.copy(referish = true,loadMode = false,userList = users)
-            }
-        },{e ->
-            mResponseErrorListener.handleResponseError(e)
-            mainUiState.postNext {state->
-                state.copy(referish = true,loadMode = false)
-            }
-        })
+        override fun loadAfter(params: LoadParams<Long>, callback: LoadCallback<UserBean>) {
+            apply(object : ResultCallBack<List<UserBean>> {
+                override suspend fun callBack(): BaseResult<List<UserBean>> {
+                    return mRepository.getUsers(params.key,params.requestedLoadSize)
+                }
+            },{
+                callback.onResult(it)
+            },{e ->
+                mResponseErrorListener.handleResponseError(e)
+            })
+        }
+
+        override fun loadBefore(params: LoadParams<Long>, callback: LoadCallback<UserBean>) {
+        }
+
+        override fun getKey(item: UserBean): Long {
+            return item.id
+        }
+
     }
 
+    val userLiveData =
+        LivePagedListBuilder(mRepository.createDataSourceFactory(userDataSource),
+            mRepository.createConfig()).build()
 
-    fun onLoadMore(){
-        apply(object : ResultCallBack<List<UserBean>> {
-            override suspend fun callBack(): BaseResult<List<UserBean>> {
-                return mRepository.getUsers(lastUserId)
-            }
-        },{
-            var users = mutableListOf<UserBean>()
-            users.addAll(it)
-            if (users.size > 0) {
-                lastUserId = users[users.size -1].id
-            }
-            mainUiState.postNext {state->
-                state.copy(loadMode = true,referish = false,userList = users)
-            }
-        },{e ->
-            mResponseErrorListener.handleResponseError(e)
-            mainUiState.postNext {state->
-                state.copy(loadMode = true,referish = false)
-            }
-        })
+    fun onRefresh(){
+        userLiveData.value!!.dataSource.invalidate()
     }
 
 }

@@ -8,4 +8,8 @@
     <string name="login_hint_password">Password</string>
     <string name="login_sign_in">Sign in</string>
 
+
+    <string name="username_not_null">User name cannot be empty</string>
+    <string name="password_not_null">Password name cannot be empty</string>
+
 </resources>

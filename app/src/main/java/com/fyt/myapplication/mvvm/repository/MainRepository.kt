@@ -1,5 +1,7 @@
 package com.fyt.myapplication.mvvm.repository
 
+import androidx.paging.DataSource
+import androidx.paging.PagedList
 import com.fyt.mvvm.base.BaseRepository
 import com.fyt.mvvm.globalsetting.IRepositoryManager
 import com.fyt.myapplication.mvvm.repository.api.UserService
@@ -8,13 +10,31 @@ import com.fyt.mvvm.base.BaseResult
 
 class MainRepository(repositoryManager: IRepositoryManager): BaseRepository(repositoryManager){
 
-    val USERS_PER_PAGE = 12
-
-    suspend fun getUsers(lastIdQueried: Int): BaseResult<List<UserBean>> {
+    suspend fun getUsers(lastIdQueried: Long, pageSize: Int): BaseResult<List<UserBean>> {
         return safeApiResponse(call = {
             mRepositoryManager!!.obtainRetrofitService(UserService::class.java)
-                .getUsers(lastIdQueried, USERS_PER_PAGE)
+                .getUsers(lastIdQueried, pageSize)
         })
     }
+
+    fun createDataSourceFactory(dataSource: DataSource<Long, UserBean>):DataSource.Factory<Long, UserBean>{
+        return object: DataSource.Factory<Long,UserBean>(){
+            override fun create(): DataSource<Long, UserBean> {
+                return dataSource
+            }
+        }
+    }
+
+    fun createConfig(): PagedList.Config{
+        return PagedList.Config
+            .Builder()
+            .setInitialLoadSizeHint(20)
+            .setPrefetchDistance(10)
+            .setPageSize(20)
+            .setEnablePlaceholders(false)
+            .build()
+    }
+
+
 
 }

@@ -1,4 +1,4 @@
-package com.fyt.myapplication.mvvm.viewmodel.uistate
+package com.fyt.myapplication.mvvm.ui.uistate
 
 import com.fyt.mvvm.base.BaseUiState
 

@@ -29,5 +29,8 @@
     <color name="color_language_c">#555555</color>
     <color name="color_language_ruby">#701516</color>
     <color name="color_language_other">#455a64</color>
+    <color name="color_black">#000000</color>
+    <color name="color_ec">#ECECEC</color>
+    <color name="color_9f">#9F9F9F</color>
 
 </resources>

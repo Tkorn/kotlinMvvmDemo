@@ -27,7 +27,8 @@ class GlobalResponseErrorListener(context: Context): IResponseErrorListener{
             msg = "请求网络超时"
         } else if (t is HttpException) {
             msg = convertStatusCode(t)
-        } else if (t is JsonParseException || t is ParseException || t is JSONException || t is JsonIOException) {
+        } else if (t is JsonParseException || t is ParseException
+            || t is JSONException || t is JsonIOException) {
             msg = "数据解析错误"
         }
         Toast.makeText(mContext,msg,Toast.LENGTH_SHORT).show()

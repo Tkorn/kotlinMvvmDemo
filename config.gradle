@@ -13,7 +13,9 @@ ext{
     def koin_version = "2.1.5"
     def androidx_version = "1.1.0"
 
-    def paging_version = "2.1.2"
+    def paging_version = "3.0.0-alpha02"
+    def nav_version = "2.3.0-alpha01"
+    def viewpager2_version = "1.0.0"
 
 
 
@@ -64,6 +66,9 @@ ext{
     // alternatively - without Android dependencies for testing
     "paging-common-ktx"         :   "androidx.paging:paging-common-ktx:$paging_version",
     "paging-rxjava2-ktx"        :   "androidx.paging:paging-rxjava2-ktx:$paging_version",
+    "nav-fragment-ktx"          :   "androidx.navigation:navigation-fragment-ktx:$nav_version",
+    "nav-ui-ktx"                :   "androidx.navigation:navigation-ui-ktx:$nav_version",
+    "viewpager2"                :   "androidx.viewpager2:viewpager2:$viewpager2_version",
 
 
     // leakcanary
@@ -72,6 +77,10 @@ ext{
 
     //timber
     "timber"                    :   "com.jakewharton.timber:timber:4.7.1",
+
+    //rxpermissions
+    "rxpermissions"             :   "com.github.tbruyelle:rxpermissions:0.12",
+    "rxjava3"                   :   "io.reactivex.rxjava3:rxjava:3.0.4"
 
     ]
 

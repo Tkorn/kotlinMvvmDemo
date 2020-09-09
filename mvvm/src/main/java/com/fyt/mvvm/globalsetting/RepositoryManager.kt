@@ -21,7 +21,6 @@ class RepositoryManager(retrofit:Retrofit, application: Application): IRepositor
     }
 
     override fun clearAllCache() {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
 

@@ -17,24 +17,4 @@ class MainRepository(repositoryManager: IRepositoryManager): BaseRepository(repo
         })
     }
 
-    fun createDataSourceFactory(dataSource: DataSource<Long, UserBean>):DataSource.Factory<Long, UserBean>{
-        return object: DataSource.Factory<Long,UserBean>(){
-            override fun create(): DataSource<Long, UserBean> {
-                return dataSource
-            }
-        }
-    }
-
-    fun createConfig(): PagedList.Config{
-        return PagedList.Config
-            .Builder()
-            .setInitialLoadSizeHint(20)
-            .setPrefetchDistance(10)
-            .setPageSize(20)
-            .setEnablePlaceholders(false)
-            .build()
-    }
-
-
-
 }

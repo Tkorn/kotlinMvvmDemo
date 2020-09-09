@@ -1,4 +1,4 @@
-package com.fyt.myapplication.common
+package com.fyt.mvvm.common
 
 import android.annotation.SuppressLint
 import android.content.Context

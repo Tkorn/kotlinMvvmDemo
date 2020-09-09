@@ -3,11 +3,11 @@ package com.fyt.mvvm.adapter
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.paging.PagedListAdapter
+import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
 import com.fyt.myapplication.base.adapter.BaseRvHolder
 
-abstract class BasePagingAdapter<T>(val callback: DiffUtil.ItemCallback<T>): PagedListAdapter<T,BaseRvHolder<T>>(callback) {
+abstract class BasePagingAdapter<T : Any>(val callback: DiffUtil.ItemCallback<T>): PagingDataAdapter<T,BaseRvHolder<T>>(callback) {
     lateinit var mHolder: BaseRvHolder<T>
 
 

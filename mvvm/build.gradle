@@ -9,7 +9,7 @@ android {
 
 
     defaultConfig {
-        minSdkVersion 23
+        minSdkVersion 18
         targetSdkVersion 29
         versionCode 1
         versionName "1.0"
@@ -75,6 +75,10 @@ dependencies {
 
     api rootProject.ext.dependencies["timber"]
     api rootProject.ext.dependencies["autosize"]
+
+    api rootProject.ext.dependencies["rxpermissions"]
+    api rootProject.ext.dependencies["rxjava3"]
+
 
 
 }

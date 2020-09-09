@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.LiveData
@@ -21,6 +22,17 @@ abstract class BaseFragment<VM: BaseViewModel<out BaseRepository, out BaseUiStat
         super.onActivityCreated(savedInstanceState)
         mViewModel = initViewModel()
         initData(savedInstanceState)
+
+        observe(mViewModel.mUiState) { state ->
+            if (state.loading){
+                showLoading()
+            }else{
+                hideLoading()
+            }
+            state.showToastMsg?.let {
+                showMessage(it)
+            }
+        }
     }
 
     fun <T> LifecycleOwner.observe(liveData: LiveData<T>, observer: (t: T) -> Unit) {
@@ -28,4 +40,8 @@ abstract class BaseFragment<VM: BaseViewModel<out BaseRepository, out BaseUiStat
     }
 
     abstract fun initViewModel(): VM
+
+    override fun showMessage(message: String) {
+        Toast.makeText(this.context,message, Toast.LENGTH_SHORT).show()
+    }
 }

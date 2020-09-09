@@ -6,10 +6,11 @@ import com.fyt.mvvm.globalsetting.IResponseErrorListener
 import com.fyt.myapplication.GlobalConfig
 import com.fyt.myapplication.GlobalHttpInterceptor
 import com.fyt.myapplication.GlobalResponseErrorListener
-import com.fyt.myapplication.mvvm.repository.LoginRepository
 import com.fyt.myapplication.mvvm.repository.MainRepository
+import com.fyt.myapplication.mvvm.repository.WanAndroidRepository
 import com.fyt.myapplication.mvvm.viewmodel.LoginViewModel
 import com.fyt.myapplication.mvvm.viewmodel.MainViewModel
+import com.fyt.myapplication.mvvm.viewmodel.WanAndroidViewModel
 import org.koin.android.ext.koin.androidContext
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
@@ -27,6 +28,8 @@ val mAppModule = module {
 
 
 val mViewModelModule = module {
-    viewModel { LoginViewModel(get(), LoginRepository(get()), get()) }
     viewModel { MainViewModel(get(), MainRepository(get()), get())}
+    viewModel { LoginViewModel(get(), WanAndroidRepository(get()), get()) }
+    viewModel { WanAndroidViewModel(get(), WanAndroidRepository(get()), get()) }
+
 }

@@ -3,8 +3,8 @@ package com.fyt.myapplication
 import android.app.Application
 import android.content.ComponentCallbacks2
 import com.bumptech.glide.Glide
+import com.fyt.mvvm.common.Preference
 import com.fyt.mvvm.di.mSingleModule
-import com.fyt.myapplication.common.Preference
 import com.fyt.myapplication.di.mAppModule
 import com.fyt.myapplication.di.mViewModelModule
 import com.squareup.leakcanary.LeakCanary

@@ -5,7 +5,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.*
 import androidx.lifecycle.Observer
-import com.fyt.myapplication.common.AppManager
+import com.fyt.mvvm.common.AppManager
 
 abstract class BaseActivity<VM: BaseViewModel<out BaseRepository, out BaseUiState>> : AppCompatActivity() , IActivity {
 
@@ -17,8 +17,8 @@ abstract class BaseActivity<VM: BaseViewModel<out BaseRepository, out BaseUiStat
         mViewModel = initViewModel()
         initData(savedInstanceState)
         var isNotAdd = false
-        if (getIntent() != null){
-            isNotAdd = getIntent().getBooleanExtra(AppManager.IS_NOT_ADD_ACTIVITY_LIST, false)
+        if (intent != null){
+            isNotAdd = intent.getBooleanExtra(AppManager.IS_NOT_ADD_ACTIVITY_LIST, false)
         }
         if (!isNotAdd){
             AppManager.getAppManager()!!.addActivity(this)
@@ -26,7 +26,6 @@ abstract class BaseActivity<VM: BaseViewModel<out BaseRepository, out BaseUiStat
 
 
         observe(mViewModel.mUiState) { state ->
-
             if (state.loading){
                 showLoading()
             }else{

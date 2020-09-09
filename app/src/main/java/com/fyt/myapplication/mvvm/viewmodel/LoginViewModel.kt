@@ -5,41 +5,45 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.fyt.mvvm.base.BaseResult
 import com.fyt.mvvm.base.BaseViewModel
+import com.fyt.mvvm.common.Preference
 import com.fyt.mvvm.globalsetting.IResponseErrorListener
-import com.fyt.myapplication.Constant
-import com.fyt.myapplication.mvvm.repository.LoginRepository
-import com.fyt.myapplication.mvvm.repository.bean.LoginRequestModel
-import com.fyt.myapplication.mvvm.repository.bean.UserAccessToken
-import com.fyt.myapplication.mvvm.viewmodel.uistate.LoginUiState
+import com.fyt.myapplication.mvvm.repository.WanAndroidRepository
+import com.fyt.myapplication.mvvm.repository.bean.BaseResponse
+import com.fyt.myapplication.mvvm.repository.bean.UserBean
+import com.fyt.myapplication.mvvm.ui.uistate.LoginUiState
 
-class LoginViewModel(application: Application,
-                     loginRepository: LoginRepository,
-                     responseErrorListener: IResponseErrorListener
-): BaseViewModel<LoginRepository,LoginUiState>(application,loginRepository,responseErrorListener) {
+class LoginViewModel(
+    application: Application,
+    repository: WanAndroidRepository,
+    responseErrorListener: IResponseErrorListener
+) : BaseViewModel<WanAndroidRepository, LoginUiState>(application, repository, responseErrorListener) {
 
-    private val loginUiState: MutableLiveData<LoginUiState> = MutableLiveData(LoginUiState())
+    private var loginUiState = MutableLiveData(LoginUiState())
     override fun getUiState(): LiveData<LoginUiState> = loginUiState
 
-    fun login(name: String, password: String) {
-
-        apply(object: ResultCallBack<UserAccessToken>{
-            override suspend fun callBack(): BaseResult<UserAccessToken> {
-                return mRepository.authorizations(
-                    LoginRequestModel(
-                        Constant.CLIENT_SECRET,
-                        Constant.SCOPE,
-                        Constant.NOTE, Constant.NOTE_URL
-                    ),
-                    Constant.CLIENT_ID,
-                    Constant.FINGERPRINT)
+    fun login(username:String, password:String) {
+        loginUiState.postValue(LoginUiState(showLoading = true))
+        apply(object :ResultCallBack<BaseResponse<UserBean>>{
+            override suspend fun callBack(): BaseResult<BaseResponse<UserBean>> {
+                return mRepository.login(username,password)
             }
         },{
+            loginUiState.postValue(LoginUiState(showLoading = false))
+            if(it.errorCode == 0){
+                Preference.preferences.edit()
+                    .putString("username",username)
+                    .putString("password",password)
+                    .apply()
+                loginUiState.postValue(LoginUiState(loginSuc = true))
+            }else{
+                loginUiState.postValue(LoginUiState(toastMsg = it.errorMsg))
+            }
 
-        },{})
-
-
+        },{
+            loginUiState.postValue(LoginUiState(toastMsg = "登录失败"))
+            mResponseErrorListener.handleResponseError(it)
+        })
 
     }
-
 
 }

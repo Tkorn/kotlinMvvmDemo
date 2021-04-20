@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.*
 import androidx.lifecycle.Observer
 import com.fyt.mvvm.common.AppManager
+import dagger.hilt.android.AndroidEntryPoint
 
 abstract class BaseActivity<VM: BaseViewModel<out BaseRepository, out BaseUiState>> : AppCompatActivity() , IActivity {
 

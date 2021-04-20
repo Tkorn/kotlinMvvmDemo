@@ -6,15 +6,17 @@ import android.text.TextUtils
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.fyt.mvvm.base.BaseFragment
 import com.fyt.myapplication.R
 import com.fyt.myapplication.mvvm.viewmodel.LoginViewModel
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_launch.*
-import org.koin.androidx.viewmodel.ext.android.getViewModel
 
+@AndroidEntryPoint
 class LoginFragment: BaseFragment<LoginViewModel>(){
-    override fun initViewModel(): LoginViewModel = getViewModel()
+    override fun initViewModel(): LoginViewModel = ViewModelProvider(this).get(LoginViewModel::class.java)
 
     override fun initView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?):
             View = inflater.inflate(R.layout.fragment_launch,container,false)

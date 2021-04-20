@@ -1,39 +1,50 @@
 package com.fyt.mvvm.di
 
+import android.app.Application
 import com.fyt.mvvm.BuildConfig
-import com.fyt.mvvm.globalsetting.IGlobalConfig
+import com.fyt.mvvm.globalsetting.IGlobalConfiguration
 import com.fyt.mvvm.globalsetting.IGlobalHttpInterceptor
 import com.fyt.mvvm.globalsetting.IRepositoryManager
 import com.fyt.mvvm.globalsetting.RepositoryManager
+import com.google.gson.Gson
 import com.google.gson.GsonBuilder
+import dagger.Binds
+import dagger.Module
+import dagger.Provides
+import dagger.hilt.InstallIn
+import dagger.hilt.android.scopes.ViewModelScoped
+import dagger.hilt.components.SingletonComponent
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import okhttp3.Response
 import okhttp3.logging.HttpLoggingInterceptor
-import org.koin.android.ext.koin.androidApplication
-import org.koin.dsl.module
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import timber.log.Timber
 import java.util.concurrent.TimeUnit
+import javax.inject.Singleton
 
+@Module
+@InstallIn(SingletonComponent::class)
+object SingleModule {
+    private val TIME_OUT : Long = 10
 
-val TIME_OUT : Long = 10
-
-val mSingleModule = module {
-
-    single {
-        GsonBuilder()
+    @Singleton
+    @Provides
+    fun provideGson(configuration:IGlobalConfiguration): Gson {
+        var builder =  GsonBuilder()
             //支持序列化值为 null 的参数
             .serializeNulls()
             //支持将序列化 key 为 Object 的 Map, 默认只能序列化 key 为 String 的 Map
             .enableComplexMapKeySerialization()
-            .create()
+        configuration.configGson(builder)
+        return builder.create()
     }
 
-    single {
-        val globalConfig: IGlobalConfig = get()
-        val globalHttpInterceptor: IGlobalHttpInterceptor = get()
+    @Singleton
+    @Provides
+    fun provideOkHttpClient(configuration: IGlobalConfiguration,
+                            globalHttpInterceptor: IGlobalHttpInterceptor):OkHttpClient{
         var builder = OkHttpClient.Builder()
             .connectTimeout(TIME_OUT, TimeUnit.SECONDS)
             .writeTimeout(TIME_OUT, TimeUnit.SECONDS)
@@ -43,13 +54,13 @@ val mSingleModule = module {
                     false -> HttpLoggingInterceptor.Level.NONE
                 }
             })
-            .addInterceptor(object : Interceptor{
+            .addInterceptor(object : Interceptor {
                 override fun intercept(chain: Interceptor.Chain): Response {
                     return chain.proceed(globalHttpInterceptor.onHttpRequestBefore(chain,chain.request()))
                 }
 
             })
-            .addNetworkInterceptor(object : Interceptor{
+            .addNetworkInterceptor(object : Interceptor {
                 override fun intercept(chain: Interceptor.Chain): Response {
                     var originalResponse: Response?
                     try {
@@ -61,19 +72,28 @@ val mSingleModule = module {
                     return globalHttpInterceptor.onHttpResultResponse(chain,originalResponse)
                 }
             })
-        globalConfig.configOkHttpClient(androidApplication(),builder).build()
-
-     }
-
-    single {
-        val globalConfig: IGlobalConfig = get()
-        Retrofit.Builder()
-            .client(get())
-            .baseUrl(globalConfig.configBaseUrl())//BuildConfig.API_BASE_URL
-            .addConverterFactory(GsonConverterFactory.create(get()))
-            .build()
+        configuration.configOkHttpClient(builder)
+        return builder.build()
     }
 
-    single<IRepositoryManager> { RepositoryManager(get(), androidApplication()) }
+    @Singleton
+    @Provides
+    fun provideRetrofit(okHttpClient: OkHttpClient, gson:Gson,
+                        configuration:IGlobalConfiguration):Retrofit{
+        var builder = Retrofit.Builder()
+            .baseUrl(configuration.configBaseUrl())//域名
+            .client(okHttpClient)//设置okhttp
+            .addConverterFactory(GsonConverterFactory.create(gson))//使用 Gson
+        configuration.configRetrofit(builder)
+        return builder.build()
+    }
 
 }
+@Module
+@InstallIn(SingletonComponent::class)
+abstract class BindModule{
+
+    @Binds
+    abstract fun bindIRepositoryManager(repositoryManager: RepositoryManager):IRepositoryManager
+}
+

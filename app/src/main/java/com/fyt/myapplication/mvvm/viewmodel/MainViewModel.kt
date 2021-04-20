@@ -7,10 +7,14 @@ import com.fyt.mvvm.base.BaseViewModel
 import com.fyt.mvvm.globalsetting.IResponseErrorListener
 import com.fyt.myapplication.mvvm.repository.MainRepository
 import com.fyt.myapplication.mvvm.ui.uistate.MainUiState
+import dagger.hilt.android.lifecycle.HiltViewModel
+import dagger.hilt.android.qualifiers.ApplicationContext
+import javax.inject.Inject
 
-class MainViewModel(
+@HiltViewModel
+class MainViewModel @Inject constructor(
     application: Application,
-    private val mainRepository: MainRepository,
+    mainRepository: MainRepository,
     responseErrorListener: IResponseErrorListener
 ) : BaseViewModel<MainRepository, MainUiState>(application, mainRepository, responseErrorListener) {
 

@@ -2,14 +2,16 @@ package com.fyt.mvvm.globalsetting
 
 import android.app.Application
 import android.content.Context
+import dagger.hilt.android.qualifiers.ApplicationContext
 import retrofit2.Retrofit
+import javax.inject.Inject
 
-class RepositoryManager(retrofit:Retrofit, application: Application): IRepositoryManager {
+class RepositoryManager @Inject constructor(retrofit:Retrofit, @ApplicationContext context: Context): IRepositoryManager {
     var mRetrofit: Retrofit = retrofit
-    var mApplication: Application = application
+    var mContext: Context = context
 
     override fun getContext(): Context {
-        return mApplication
+        return mContext
     }
 
     override fun <T> obtainRetrofitService(service: Class<T>): T {

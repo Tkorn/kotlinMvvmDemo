@@ -1,10 +1,9 @@
 apply plugin: 'com.android.application'
-
 apply plugin: 'kotlin-android'
-
 apply plugin: 'kotlin-android-extensions'
-
 apply plugin: 'kotlin-kapt'
+apply plugin: 'dagger.hilt.android.plugin'
+
 
 android {
     compileSdkVersion 29
@@ -27,6 +26,9 @@ android {
         sourceCompatibility 1.8
         targetCompatibility 1.8
     }
+    kotlinOptions{
+        jvmTarget = "1.8"
+    }
 }
 
 dependencies {
@@ -48,5 +50,12 @@ dependencies {
 
     implementation project(path: ':mvvm')
 
+    //hilt
+    implementation rootProject.ext.dependencies["hilt"]
+    kapt rootProject.ext.dependencies["hilt-compiler"]
+    androidTestImplementation rootProject.ext.dependencies["hilt-testing"]
+    kaptAndroidTest rootProject.ext.dependencies["hilt-compiler"]
+    testImplementation rootProject.ext.dependencies["hilt-testing"]
+    kaptTest rootProject.ext.dependencies["hilt-compiler"]
 
 }

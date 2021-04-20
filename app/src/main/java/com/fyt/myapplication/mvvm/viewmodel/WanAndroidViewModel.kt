@@ -7,8 +7,13 @@ import com.fyt.mvvm.base.BaseUiState
 import com.fyt.mvvm.base.BaseViewModel
 import com.fyt.mvvm.globalsetting.IResponseErrorListener
 import com.fyt.myapplication.mvvm.repository.WanAndroidRepository
+import dagger.hilt.android.lifecycle.HiltViewModel
+import dagger.hilt.android.qualifiers.ApplicationContext
+import javax.inject.Inject
 
-class WanAndroidViewModel(
+
+@HiltViewModel
+class WanAndroidViewModel @Inject constructor(
     application: Application,
     repository: WanAndroidRepository,
     responseErrorListener: IResponseErrorListener

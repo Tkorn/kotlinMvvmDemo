@@ -2,7 +2,9 @@
 
 ext{
 
-
+    minSdkVersion = 21
+    targetSdkVersion = 29
+    compileSdkVersion = 29
 
     def lifecycle_version = "2.2.0"
     def retrofit2_version = "2.7.1"
@@ -16,6 +18,8 @@ ext{
     def paging_version = "3.0.0-alpha02"
     def nav_version = "2.3.0-alpha01"
     def viewpager2_version = "1.0.0"
+    def hilt_version = "2.34-beta"
+
 
 
 
@@ -80,8 +84,12 @@ ext{
 
     //rxpermissions
     "rxpermissions"             :   "com.github.tbruyelle:rxpermissions:0.12",
-    "rxjava3"                   :   "io.reactivex.rxjava3:rxjava:3.0.4"
+    "rxjava3"                   :   "io.reactivex.rxjava3:rxjava:3.0.4",
 
+    //hilt
+    "hilt"                      :   "com.google.dagger:hilt-android:$hilt_version",
+    "hilt-compiler"             :   "com.google.dagger:hilt-android-compiler:$hilt_version",
+    "hilt-testing"              :   "com.google.dagger:hilt-android-testing:$hilt_version",
     ]
 
 

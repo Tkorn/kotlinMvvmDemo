@@ -6,13 +6,15 @@ import android.widget.Toast
 import com.fyt.mvvm.globalsetting.IResponseErrorListener
 import com.google.gson.JsonIOException
 import com.google.gson.JsonParseException
+import dagger.hilt.android.qualifiers.ApplicationContext
 import org.json.JSONException
 import retrofit2.HttpException
 import timber.log.Timber
 import java.net.SocketTimeoutException
 import java.net.UnknownHostException
+import javax.inject.Inject
 
-class GlobalResponseErrorListener(context: Context): IResponseErrorListener{
+class GlobalResponseErrorListenerImpl @Inject constructor(@ApplicationContext context: Context): IResponseErrorListener{
 
     var mContext = context
 

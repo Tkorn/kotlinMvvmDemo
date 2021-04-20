@@ -2,12 +2,11 @@ apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
+apply plugin: 'dagger.hilt.android.plugin'
 
 android {
     compileSdkVersion 29
     buildToolsVersion "29.0.3"
-
-
     defaultConfig {
         minSdkVersion 18
         targetSdkVersion 29
@@ -24,6 +23,11 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
+
+    kotlinOptions{
+        jvmTarget = "1.8"
+    }
+
 
 }
 
@@ -63,10 +67,9 @@ dependencies {
     api rootProject.ext.dependencies["glide"]
     kapt rootProject.ext.dependencies["glide-compiler"]
 
-    // Koin
-    api rootProject.ext.dependencies["koin-androidx-scope"]
-    api rootProject.ext.dependencies["koin-androidx-viewmodel"]
-    api rootProject.ext.dependencies["koin-androidx-ext"]
+    //hilt
+    implementation rootProject.ext.dependencies["hilt"]
+    kapt rootProject.ext.dependencies["hilt-compiler"]
 
     // paging
     api rootProject.ext.dependencies["paging-runtime-ktx"]
@@ -79,6 +82,5 @@ dependencies {
     api rootProject.ext.dependencies["rxpermissions"]
     api rootProject.ext.dependencies["rxjava3"]
 
-
-
 }
+

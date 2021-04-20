@@ -1,6 +1,7 @@
 package com.fyt.myapplication.mvvm.viewmodel
 
 import android.app.Application
+import android.content.Context
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.fyt.mvvm.base.BaseResult
@@ -11,9 +12,12 @@ import com.fyt.myapplication.mvvm.repository.WanAndroidRepository
 import com.fyt.myapplication.mvvm.repository.bean.BaseResponse
 import com.fyt.myapplication.mvvm.repository.bean.UserBean
 import com.fyt.myapplication.mvvm.ui.uistate.LoginUiState
+import dagger.hilt.android.lifecycle.HiltViewModel
+import dagger.hilt.android.qualifiers.ApplicationContext
+import javax.inject.Inject
 
-class LoginViewModel(
-    application: Application,
+@HiltViewModel
+class LoginViewModel @Inject constructor(application: Application,
     repository: WanAndroidRepository,
     responseErrorListener: IResponseErrorListener
 ) : BaseViewModel<WanAndroidRepository, LoginUiState>(application, repository, responseErrorListener) {

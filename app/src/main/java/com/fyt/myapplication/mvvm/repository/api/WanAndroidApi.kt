@@ -17,7 +17,14 @@ interface WanAndroidApi {
     @FormUrlEncoded
     suspend fun login(
         @Field("username") username: String,
-        @Field("password") password: String):  Response<BaseResponse<UserBean>>
+        @Field("password") password: String): Response<BaseResponse<UserBean>>
+
+    @POST("user/register")
+    @FormUrlEncoded
+    suspend fun register(
+        @Field("username") username: String,
+        @Field("password") password: String,
+        @Field("repassword") repassword: String): Response<BaseResponse<UserBean>>
 
 
     @Headers(value = [HEADER_API_VERSION])

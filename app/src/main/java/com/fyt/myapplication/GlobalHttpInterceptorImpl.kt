@@ -4,8 +4,9 @@ import com.fyt.mvvm.globalsetting.IGlobalHttpInterceptor
 import okhttp3.Interceptor
 import okhttp3.Request
 import okhttp3.Response
+import javax.inject.Inject
 
-class GlobalHttpInterceptor : IGlobalHttpInterceptor {
+class GlobalHttpInterceptorImpl @Inject constructor() : IGlobalHttpInterceptor {
 
     override fun onHttpRequestBefore(chain: Interceptor.Chain, request: Request): Request {
         /*

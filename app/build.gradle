@@ -1,6 +1,5 @@
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
-apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
 apply plugin: 'dagger.hilt.android.plugin'
 
@@ -29,9 +28,15 @@ android {
     kotlinOptions{
         jvmTarget = "1.8"
     }
+
+    buildFeatures {
+        dataBinding = true
+    }
 }
 
 dependencies {
+    implementation project(path: ':mvvmAF')
+    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     def leakcanary_version = "1.6.3"
     implementation fileTree(include: ['*.jar'], dir: 'libs')
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
@@ -48,7 +53,6 @@ dependencies {
     implementation rootProject.ext.dependencies["nav-fragment-ktx"]
     implementation rootProject.ext.dependencies["nav-ui-ktx"]
 
-    implementation project(path: ':mvvm')
 
     //hilt
     implementation rootProject.ext.dependencies["hilt"]
@@ -58,4 +62,8 @@ dependencies {
     testImplementation rootProject.ext.dependencies["hilt-testing"]
     kaptTest rootProject.ext.dependencies["hilt-compiler"]
 
+}
+
+kapt {
+    correctErrorTypes true
 }

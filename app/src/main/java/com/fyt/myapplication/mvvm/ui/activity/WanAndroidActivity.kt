@@ -1,18 +1,18 @@
 package com.fyt.myapplication.mvvm.ui.activity
 
 import android.os.Bundle
-import androidx.lifecycle.ViewModelProvider
-import com.fyt.mvvm.base.BaseActivity
+import androidx.navigation.Navigation
+import androidx.navigation.findNavController
+import com.fyt.mvvm.base.BaseVmActivity
 import com.fyt.myapplication.R
 import com.fyt.myapplication.mvvm.viewmodel.WanAndroidViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class WanAndroidActivity: BaseActivity<WanAndroidViewModel>() {
+class WanAndroidActivity: BaseVmActivity<WanAndroidViewModel>() {
+    override fun layoutId(): Int = R.layout.activity_wanandroid
 
-    override fun initViewModel() = ViewModelProvider(this).get(WanAndroidViewModel::class.java)
+    override fun initData(savedInstanceState: Bundle?) {
+    }
 
-    override fun initView(savedInstanceState: Bundle?): Int = R.layout.activity_wanandroid
-
-    override fun initData(savedInstanceState: Bundle?) {}
 }

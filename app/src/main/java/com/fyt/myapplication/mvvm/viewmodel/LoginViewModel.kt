@@ -20,19 +20,18 @@ import javax.inject.Inject
 class LoginViewModel @Inject constructor(application: Application,
     repository: WanAndroidRepository,
     responseErrorListener: IResponseErrorListener
-) : BaseViewModel<WanAndroidRepository, LoginUiState>(application, repository, responseErrorListener) {
+) : BaseViewModel<WanAndroidRepository>(application, repository, responseErrorListener) {
 
-    private var loginUiState = MutableLiveData(LoginUiState())
-    override fun getUiState(): LiveData<LoginUiState> = loginUiState
+    var loginUiState = MutableLiveData<LoginUiState>()
 
     fun login(username:String, password:String) {
-        loginUiState.postValue(LoginUiState(showLoading = true))
+        showLoading.postValue(true)
         apply(object :ResultCallBack<BaseResponse<UserBean>>{
             override suspend fun callBack(): BaseResult<BaseResponse<UserBean>> {
                 return mRepository.login(username,password)
             }
         },{
-            loginUiState.postValue(LoginUiState(showLoading = false))
+            showLoading.postValue(false)
             if(it.errorCode == 0){
                 Preference.preferences.edit()
                     .putString("username",username)
@@ -40,11 +39,11 @@ class LoginViewModel @Inject constructor(application: Application,
                     .apply()
                 loginUiState.postValue(LoginUiState(loginSuc = true))
             }else{
-                loginUiState.postValue(LoginUiState(toastMsg = it.errorMsg))
+                showToastMsg.postValue( it.errorMsg)
             }
 
         },{
-            loginUiState.postValue(LoginUiState(toastMsg = "登录失败"))
+            showToastMsg.postValue("登录失败")
             mResponseErrorListener.handleResponseError(it)
         })
 

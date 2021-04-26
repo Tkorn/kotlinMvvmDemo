@@ -1,10 +1,117 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ImageView
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        android:orientation="vertical"
-        android:src="@mipmap/launch"
-        android:scaleType="fitXY"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
+<layout>
 
-</ImageView>
+    <data>
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+
+        <TextView
+                android:id="@+id/tv_title"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                android:layout_marginTop="14.5dp"
+                android:text="Login"
+                android:textSize="19sp"
+                android:textColor="@color/color_black"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+
+        <LinearLayout
+                android:id="@+id/ll_account"
+                android:layout_marginTop="173.5dp"
+                android:orientation="horizontal"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                android:background="@drawable/shape_login_input"
+                android:layout_width="305dp"
+                android:layout_height="44dp">
+
+
+            <EditText
+                    android:id="@+id/et_account"
+                    android:background="@null"
+                    android:paddingLeft="8dp"
+                    android:inputType="textEmailAddress"
+                    android:maxLines="1"
+                    android:textSize="16sp"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent" />
+
+
+        </LinearLayout>
+
+        <TextView
+                app:layout_constraintBottom_toTopOf="@id/ll_account"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                android:text="Account"
+                android:layout_marginBottom="5dp"
+                android:textColor="@color/color_9f"
+                android:textSize="16sp"
+                android:layout_width="305dp"
+                android:layout_height="wrap_content" />
+
+        <LinearLayout
+                android:id="@+id/ll_password"
+                android:layout_marginTop="50dp"
+                android:orientation="horizontal"
+                app:layout_constraintTop_toBottomOf="@id/ll_account"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                android:background="@drawable/shape_login_input"
+                android:layout_width="305dp"
+                android:layout_height="44dp">
+
+
+            <EditText
+                    android:id="@+id/et_password"
+                    android:paddingLeft="8dp"
+                    android:inputType="textPassword"
+                    android:background="@null"
+                    android:maxLines="1"
+                    android:textSize="16sp"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent" />
+
+        </LinearLayout>
+
+
+        <TextView
+                app:layout_constraintBottom_toTopOf="@id/ll_password"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                android:text="Password"
+                android:layout_marginBottom="5dp"
+                android:textColor="@color/color_9f"
+                android:textSize="16sp"
+                android:layout_width="305dp"
+                android:layout_height="wrap_content" />
+
+
+        <TextView
+                android:id="@+id/btn_login"
+                app:layout_constraintTop_toBottomOf="@id/ll_password"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                android:layout_marginTop="50dp"
+                android:background="@drawable/shape_login_btn"
+                android:textColor="@color/white"
+                android:textSize="18sp"
+                android:gravity="center"
+                android:text="Login"
+                android:layout_width="305dp"
+                android:layout_height="44dp" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

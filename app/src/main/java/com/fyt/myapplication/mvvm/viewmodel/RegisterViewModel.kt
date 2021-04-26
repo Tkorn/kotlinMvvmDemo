@@ -17,14 +17,11 @@ import javax.inject.Inject
 class RegisterViewModel @Inject constructor(application: Application,
                                             wanAndroidRepository: WanAndroidRepository,
                                             responseErrorListener: GlobalResponseErrorListenerImpl):
-    BaseViewModel<WanAndroidRepository,LoginUiState>(application,wanAndroidRepository,responseErrorListener) {
+    BaseViewModel<WanAndroidRepository>(application,wanAndroidRepository,responseErrorListener) {
 
-    private var registerUiState = MutableLiveData(LoginUiState())
-
-    override fun getUiState(): LiveData<LoginUiState> = registerUiState
 
     fun register(account: String, password: String,repassword: String){
-        registerUiState.postValue(LoginUiState(showLoading = true))
+        showLoading.postValue( true)
         apply(object : ResultCallBack<BaseResponse<UserBean>> {
             override suspend fun callBack(): BaseResult<BaseResponse<UserBean>> {
                 return mRepository.register(account,password,repassword)
@@ -36,9 +33,5 @@ class RegisterViewModel @Inject constructor(application: Application,
         })
 
     }
-
-
-
-
 
 }
